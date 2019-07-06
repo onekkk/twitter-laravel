@@ -1,0 +1,21 @@
+.box {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 300px; /*追加*/
+}
+.image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%); /*調整*/
+}
+
+#user_info img{
+	margin: 0 auto;
+}
+
+#user_name strong{
+	font-size: 30px;
+}

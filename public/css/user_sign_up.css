@@ -1,0 +1,16 @@
+body{
+  background-color: #1da1f2;
+}
+#content{
+  padding: 30px 40px;
+  margin-top: 25px;
+  border: solid 1px #e6ecf0;
+  border-radius: 20px;
+  background-color: #fff;
+
+}
+
+#login_btn a{
+  display: inline-block;
+  padding: 6px 3px 0 0;
+}
