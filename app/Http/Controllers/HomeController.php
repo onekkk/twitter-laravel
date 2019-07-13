@@ -30,26 +30,40 @@ class HomeController extends Controller
     {
         $auth = Auth::user(); //ユーザ情報取得
 
+        // $tweets = DB::table('tweets')
+        //     ->join('users', 'tweets.author_id', '=', 'users.id')
+        //     ->select('tweets.*', 'users.id as author_id', 'users.user_id as author_user_id', 'users.name as author_name', 'users.img_path as author_img')
+            
+        //     ->where('author_id', '=', $auth['id'])
+        //     ->orwhereIn('author_id', 
+        //                         function ($query) use ($auth)
+        //                         {
+        //                             $query->select('follower_id')
+        //                                   ->from('follows')
+        //                                   ->where('follow_id', '=', (int)$auth['id']);
+                                          
+        //                         }
+        //                     )
+        //     ->orderBy('tweets.created_at', 'desc')
+        //     ->paginate(20);
+
+
+        //サブクエリからleftJoinに変更
         $tweets = DB::table('tweets')
             ->join('users', 'tweets.author_id', '=', 'users.id')
+            ->leftJoin('follows', 'follows.follower_id', '=', 'tweets.author_id')
             ->select('tweets.*', 'users.id as author_id', 'users.user_id as author_user_id', 'users.name as author_name', 'users.img_path as author_img')
-            
-            ->where('author_id', '=', $auth['id'])
-            ->orwhereIn('author_id', 
-                                function ($query) use ($auth)
-                                {
-                                    $query->select('follower_id')
-                                          ->from('follows')
-                                          ->where('follow_id', '=', (int)$auth['id']);
-                                          
-                                }
-                            )
+            ->where('tweets.author_id', '=', $auth['id'])
+            ->orwhere('follows.follow_id', '=', $auth['id'])
             ->orderBy('tweets.created_at', 'desc')
             ->paginate(20);
+
+
             // ->toSql();
 
             // var_dump($tweets);
             // var_dump(str_replace("`", "", $tweets));
+            // var_dump($auth['id']);
             // exit;
 
         return view('index', ['tweets' => $tweets, 'auth' => $auth]);
