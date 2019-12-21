@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Tweet;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Follow;
 
 class UserDetailController extends Controller
@@ -18,6 +19,11 @@ class UserDetailController extends Controller
     public function index(Request $request, $userId)
     {
     	$auth = Auth::user(); //ユーザ情報取得
+        if($auth['img_path'] != null){
+            $auth['img_path'] = Storage::disk('s3')->url($auth['img_path']);
+        }else{
+            $auth['img_path'] = Storage::disk('s3')->url('profile_img/unknown.jpg');
+        }
 
     	$user_id = (int)$userId;
 

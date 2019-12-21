@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Tweet;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -16,9 +17,14 @@ class ProfileController extends Controller
 
     public function index(Request $request)
     {
-    	$auth = Auth::user(); //ユーザ情報取得
+	    $auth = Auth::user(); //ユーザ情報取得
+	    if($auth['img_path'] != null){
+		    $auth['img_path'] = Storage::disk('s3')->url($auth['img_path']);
+	    }else{
+	    	$auth['img_path'] = Storage::disk('s3')->url('profile_img/unknown.jpg');
+	    }
 
-    	$user_id = (int)$auth['id'];
+        $user_id = (int)$auth['id'];
 
         $tweets = DB::table('tweets')
             ->join('users', 'tweets.author_id', '=', 'users.id')

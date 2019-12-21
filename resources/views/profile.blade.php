@@ -8,9 +8,9 @@
     <div class="col-md-3">
         <div id="user_info" class="col-md-12">
             @if ($auth->img_path != null)
-                <img src="../{{$user->img_path}}" alt="" width="100px" class="img_circle"> 
+                <img src="{{$auth->img_path}}" alt="" width="100px" class="img_circle"> 
             @else
-                <img src="../storage/users_images/unknown.jpg" alt="" width="" class="img_circle">
+                <img src="{{$auth->img_path}}" alt="" width="" class="img_circle">
             @endif
             <p id="user_name">
                 <strong>{{$auth->name}}</strong>
