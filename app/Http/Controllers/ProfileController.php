@@ -26,24 +26,12 @@ class ProfileController extends Controller
 
         $user_id = (int)$auth['id'];
 
-        $tweets = DB::table('tweets')
-            ->join('users', 'tweets.author_id', '=', 'users.id')
+        $tweets = Tweet::join('users', 'tweets.author_id', '=', 'users.id')
             ->select('tweets.*', 'users.id as author_id', 'users.user_id as author_user_id', 'users.name as author_name', 'users.img_path as author_img')
             ->where('tweets.author_id', $user_id)
             ->orderBy('tweets.created_at', 'desc')
-            ->paginate(3);
+            ->paginate(20);
 
-	foreach($tweets as $twt){
-	    if($twt->img_path != null){
-	        $twt->img_path = Storage::disk('s3')->url($twt->img_path);
-	    }
-
-	    if($twt->author_img != null){
-	    	$twt->author_img = Storage::disk('s3')->url($twt->author_img);
-	    }else{
-	    	$twt->author_img = Storage::disk('s3')->url('profile_img/unknown.jpg');
-	    }
-	}
         return view('profile', ['auth' => $auth, 'tweets' => $tweets,]);
     }
 }

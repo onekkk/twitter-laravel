@@ -14,14 +14,14 @@ class Follow extends Model
 		'updated_at',
 	]; 
 
-	public delete function(){
+	public function insert(){
 		self::create([
                 'follow_id' => $req['follow'],
                 'follower_id' => $req['follower'],
         ]);
 	}
 
-	public delete function(){
+	public function delete(){
 		$del = self::where('follow_id', $req['follow'])->where('follower_id', $req['follower'])->delete();
 	}
 

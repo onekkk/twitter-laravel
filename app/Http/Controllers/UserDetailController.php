@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Tweet;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Follow;
@@ -31,13 +32,11 @@ class UserDetailController extends Controller
             return redirect('/profile');
         }
 
-    	$user = DB::table('users')
-    		->select('*')
+    	$user = User::select('*')
     		->where('id', $user_id)
     		->first();
 
-        $tweets = DB::table('tweets')
-            ->join('users', 'tweets.author_id', '=', 'users.id')
+        $tweets = Tweet::join('users', 'tweets.author_id', '=', 'users.id')
             ->select('tweets.*', 'users.id as author_id', 'users.user_id as author_user_id', 'users.name as author_name', 'users.img_path as author_img')
             ->where('tweets.author_id', $user_id)
             ->orderBy('tweets.created_at', 'desc')

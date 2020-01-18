@@ -39,17 +39,12 @@ class User extends Authenticatable
     ];
 
 
-    public static function cloudFrontUrl($file_name){
-	    $url = env("AWS_CLOUD_FRONT_URL") . "/". $file_name;
-	    //var_dump($url);exit;
-	    return $url;
-    }
-
     public function img_url(): ?String
     {
+	    $base_url = env("AWS_CLOUD_FRONT_URL") . "/"; 
             if ($this->img_path == null) {
-                    return null;
+                    return $base_url . "profile_img/unknown.jpg";
             }
-    	    return env("AWS_CLOUD_FRONT_URL") . "/". $this->img_path;
+    	    return $base_url . $this->img_path;
     }
 }

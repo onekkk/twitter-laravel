@@ -59,7 +59,7 @@
                 @foreach ($tweets as $tweet)
                     <div class="tweet">
                         <div class="tw_user"> 
-                                <img src="{{$tweet->author->img_path}}" alt="" width="50px" class="img_circle"> 
+                                <img src="{{$tweet->author->img_url()}}" alt="" width="50px" class="img_circle"> 
                             
                                 <a href="{{ route('userDetail', ['id' => $tweet->author_id]) }}">
                                     {{$tweet->author_user_id}}

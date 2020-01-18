@@ -73,23 +73,6 @@ class HomeController extends Controller
             // exit;
 
 
-	foreach($tweets as $tweet){
-		//dd($tweet->author);
-	    // if($twt->img_path != null){
-            //     //$twt->img_path = Storage::disk('s3')->url($twt->img_path);
-	    //         //var_dump($twt->img_path);exit;
-	    //     var_dump($twt);
-	    //         User::cloudFrontUrl($twt->img_path);
-	    // }
-
-
-            //if($twt->author_img != null){
-            //    $twt->author_img = Storage::disk('s3')->url($twt->author_img);
-            //}else{
-            //    $twt->author_img = Storage::disk('s3')->url('profile_img/unknown.jpg');
-            //}
-	}
-
         return view('index', ['tweets' => $tweets, 'auth' => $auth]);
     }
 

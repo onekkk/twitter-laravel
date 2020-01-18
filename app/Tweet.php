@@ -23,10 +23,12 @@ class Tweet extends Model
 
     public function img_url(): ?String
     {
-	    if ($this->img_path == null) {
-		    return null;
-	    }
-            return Storage::disk('s3')->url($this->img_path);
+    	    $base_url = env("AWS_CLOUD_FRONT_URL") . "/"; 
+            if ($this->img_path == null) {
+                    return null;
+            }
+    	    return $base_url . $this->img_path;
+
     }
 
 

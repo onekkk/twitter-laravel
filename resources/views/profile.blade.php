@@ -28,11 +28,7 @@
                 @foreach ($tweets as $tweet)
                     <div class="tweet">
                         <div class="tw_user"> 
-                            @if ($tweet->author_img != null)
-                                <img src="{{$tweet->author_img}}" alt="" width="50px" class="img_circle"> 
-                            @else
-				<img src="{{$tweet->author_img}}" alt="" width="50px" class="img_circle">    	    
-			    @endif
+                                <img src="{{$tweet->author->img_url()}}" alt="" width="50px" class="img_circle"> 
                             
                                 <a href="user_detail.php?detail_user={{$tweet->author_id}}">
                                     {{$tweet->author_user_id}}
@@ -41,8 +37,8 @@
                         </div>
                         <div>
                             <p>{{$tweet->body}}</p>
-                            @if ($tweet->img_path != null)
-                                <img src="{{$tweet->img_path}}" alt="" width="100px">
+                            @if (!empty($tweet->img_url()))
+                                <img src="{{$tweet->img_url()}}" alt="" width="100px">
                             @endif
                             
                             </div>
