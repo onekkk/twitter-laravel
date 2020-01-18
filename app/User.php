@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -36,4 +37,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public static function cloudFrontUrl($file_name){
+	    $url = env("AWS_CLOUD_FRONT_URL") . "/". $file_name;
+	    //var_dump($url);exit;
+	    return $url;
+    }
+
+    public function img_url(): ?String
+    {
+            if ($this->img_path == null) {
+                    return null;
+            }
+    	    return env("AWS_CLOUD_FRONT_URL") . "/". $this->img_path;
+    }
 }

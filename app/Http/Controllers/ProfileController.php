@@ -33,7 +33,17 @@ class ProfileController extends Controller
             ->orderBy('tweets.created_at', 'desc')
             ->paginate(3);
 
+	foreach($tweets as $twt){
+	    if($twt->img_path != null){
+	        $twt->img_path = Storage::disk('s3')->url($twt->img_path);
+	    }
 
+	    if($twt->author_img != null){
+	    	$twt->author_img = Storage::disk('s3')->url($twt->author_img);
+	    }else{
+	    	$twt->author_img = Storage::disk('s3')->url('profile_img/unknown.jpg');
+	    }
+	}
         return view('profile', ['auth' => $auth, 'tweets' => $tweets,]);
     }
 }
