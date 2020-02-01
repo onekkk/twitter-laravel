@@ -18,6 +18,7 @@ class ProfileController extends Controller
     public function index(Request $request)
     {
 	    $auth = Auth::user(); //ユーザ情報取得
+	    //var_dump($auth);exit;
 	    if($auth['img_path'] != null){
 		    $auth['img_path'] = Storage::disk('s3')->url($auth['img_path']);
 	    }else{
